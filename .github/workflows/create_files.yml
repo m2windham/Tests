@@ -1,0 +1,27 @@
+name: Create Files
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  create_files:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Create and commit new files
+      run: |
+        echo "Creating files..."
+        mkdir -p new_directory
+        echo "print('Hello, world!')" > new_directory/hello.py
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git add .
+        git commit -m "Add new files via GitHub Actions"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_AI }}
